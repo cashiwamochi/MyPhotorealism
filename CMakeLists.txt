@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.1 FATAL_ERROR)
 
 project(MyPhotorealism)
 
@@ -17,8 +17,11 @@ include_directories(
   ${PROJECT_SOURCE_DIR}/src
 )
 
+enable_testing()
+
 add_executable(
   main
   main.cc
 )
 
+add_subdirectory(test)
