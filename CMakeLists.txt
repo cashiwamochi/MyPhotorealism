@@ -10,6 +10,7 @@ ELSE()
   set(CMAKE_MACOSX_RPATH 1) # This is needed in macOS
 ENDIF()
 
+
 set( CMAKE_CXX_FLAGS "-std=c++17" )
 
 include_directories(
