@@ -37,10 +37,11 @@ class Image {
     }
     catch(const char* e) {
       throw e;
+      return Vec3(0.0,0.0,0.0);
     }
   }
 
-  Image* setPixel(int r, int c, const Vec3& v) {
+  Image& setPixel(int r, int c, const Vec3& v) {
     try{
       if(r<0 || r>=height) {
         throw "Invalid Index for Col in setPixel";
@@ -49,10 +50,11 @@ class Image {
         throw "Invalid Index for Row in setPixel";
       }
       data[width*r + c] = v;
-      return this;
+      return *this;
     }
     catch(const char* e) {
       throw e;
+      return *this;
     }
   }
 
@@ -83,8 +85,8 @@ class Image {
     fs << width << " " << height << "\n";
     fs << 255 << "\n";
 
-    for(int r = 0; r < 512; ++r) {
-      for(int c = 0; c < 512; ++c) {
+    for(int r = 0; r < height; ++r) {
+      for(int c = 0; c < width; ++c) {
         Vec3 v = getPixel(r,c);
         const int r = clamp(static_cast<int>(v.x*255.0), 0, 255);
         const int g = clamp(static_cast<int>(v.y*255.0), 0, 255);

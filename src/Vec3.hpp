@@ -17,6 +17,62 @@ class Vec3 {
     double length2() const {
       return std::sqrt(x*x+y*y+z*z);
     }
+
+  Vec3& operator += (const Vec3& v) {
+    x += v.x;
+    y += v.y;
+    z += v.z;
+    return *this;
+  }
+  
+  Vec3& operator -= (const Vec3& v) {
+    x -= v.x;
+    y -= v.y;
+    z -= v.z;
+    return *this;
+  }
+
+  Vec3& operator *= (const Vec3& v) {
+    x *= v.x;
+    y *= v.y;
+    z *= v.z;
+    return *this;
+  }
+
+  Vec3& operator /= (const Vec3& v) {
+    x /= v.x;
+    y /= v.y;
+    z /= v.z;
+    return *this;
+  }
+
+  Vec3& operator += (const double& s) {
+    x += s;
+    y += s;
+    z += s;
+    return *this;
+  }
+  
+  Vec3& operator -= (const double& s) {
+    x -= s;
+    y -= s;
+    z -= s;
+    return *this;
+  }
+
+  Vec3& operator *= (const double& s) {
+    x *= s;
+    y *= s;
+    z *= s;
+    return *this;
+  }
+
+  Vec3& operator /= (const double& s) {
+    x /= s;
+    y /= s;
+    z /= s;
+    return *this;
+  }
 };
 
 // Vector and Vector
