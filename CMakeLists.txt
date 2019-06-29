@@ -24,4 +24,14 @@ add_executable(
   main.cc
 )
 
+add_executable(
+  pinhole_main
+  pinhole_main.cc
+)
+
+add_executable(
+  pinhole_sphere_main
+  pinhole_sphere_main.cc
+)
+
 add_subdirectory(test)

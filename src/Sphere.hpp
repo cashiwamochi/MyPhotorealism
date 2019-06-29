@@ -29,7 +29,7 @@ class Sphere {
         // res.hitPos = ray(t1);
         // res.hitNormal = normalize(res.hitPos - center);
         // res.hitSphere = this;
-        res = Hit(t1, ray(t1), normalize(res.hitPos - center), this);
+        res = Hit(t1, ray(t1), normalize(ray(t1) - center), this);
         return true;
       }
 

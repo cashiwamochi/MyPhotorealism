@@ -9,8 +9,8 @@ using namespace std;
 auto main(int argc, char* argv[]) -> int 
 try
 {
-  const int height=512;
-  const int width=512;
+  const int height = 512;
+  const int width = 512;
   Image img(height, width);
   for(int r = 0; r < height; ++r) {
     for(int c = 0; c < width; ++c) {
@@ -19,7 +19,7 @@ try
     }
   }
 
-  img.writePPM("test_ppm.ppm");
+  img.writePPM("test.ppm");
 
   return 0;
 }
