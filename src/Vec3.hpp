@@ -11,11 +11,11 @@ class Vec3 {
     Vec3(double _x, double _y, double _z): x(_x), y(_y), z(_z){};
 
     double length() const {
-      return std::sqrt(x*x+y*y+z*z);
+      return std::sqrt(x*x + y*y + z*z);
     }
 
     double length2() const {
-      return std::sqrt(x*x+y*y+z*z);
+      return x*x + y*y + z*z;
     }
 
   Vec3& operator += (const Vec3& v) {
