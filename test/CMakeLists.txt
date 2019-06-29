@@ -37,5 +37,5 @@ include_directories(
 )
           
 add_subdirectory(testVec3)
-# add_subdirectory(testSampleLib1)
+add_subdirectory(testRay)
 # add_subdirectory(testSampleLib2)
