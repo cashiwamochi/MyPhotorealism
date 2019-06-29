@@ -62,7 +62,7 @@ Vec3 operator * (const double& s, const Vec3& v) {
 }
 
 Vec3 operator / (const Vec3& v, const double& s) {
-  return Vec3(v.x/s, v.y/s, v.x/s);
+  return Vec3(v.x/s, v.y/s, v.z/s);
 }
 
 Vec3 operator / (const double& s, const Vec3& v) {
@@ -86,7 +86,7 @@ Vec3 normalize(const Vec3& v) {
 std::ostream& operator << (std::ostream& stream, const Vec3& v) {
   stream << "( " << v.x 
          << ", " << v.y
-         << ", " << v.x
-         << " )" << std::endl;
+         << ", " << v.z
+         << " )";
   return stream;
 } 

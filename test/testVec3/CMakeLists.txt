@@ -18,12 +18,6 @@ target_link_libraries(
   libgmock
 )
 
-# target_link_libraries(
-#   testVec3
-#   # ${binary_dir}/googlemock/gtest/libgtest.a
-#   # ${binary_dir}/googlemock/gtest/libgmock.a
-# )
-
 add_test(
   NAME testVec3
   COMMAND testVec3
