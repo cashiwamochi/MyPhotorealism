@@ -34,4 +34,9 @@ add_executable(
   pinhole_sphere_main.cc
 )
 
+add_executable(
+  aggregate_main
+  aggregate_main.cc
+)
+
 add_subdirectory(test)

@@ -28,7 +28,7 @@ class Sphere {
         // res.distance = t1;
         // res.hitPos = ray(t1);
         // res.hitNormal = normalize(res.hitPos - center);
-        // res.hitSphere = this;
+        // res.hitSphere = this; // this is wrong because the type of res.hitspheres is "const" Sphere* 
         res = Hit(t1, ray(t1), normalize(ray(t1) - center), this);
         return true;
       }
