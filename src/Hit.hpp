@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Vec3.hpp"
+#include "Hitable.hpp"
 
 class Sphere;
 
@@ -9,13 +10,14 @@ class Hit{
     double distance;
     Vec3 hitPos;
     Vec3 hitNormal;
-    const Sphere* hitSphere;
+    // const Sphere* hitSphere;
+    const Hitable* hitSphere;
 
     Hit() {
-      distance = 1000000.0;
+      distance = 10000.0;
     };
 
-    Hit(const double& _d, const Vec3& _hitPos, const Vec3& _hitNormal, const Sphere* _hitSphere)
+    Hit(const double& _d, const Vec3& _hitPos, const Vec3& _hitNormal, const Hitable* _hitSphere)
     : distance(_d), hitPos(_hitPos), hitNormal(_hitNormal), hitSphere(_hitSphere) 
     {}
 
