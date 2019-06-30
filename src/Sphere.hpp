@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cmath>
+#include <memory>
 #include "Vec3.hpp"
 #include "Ray.hpp"
 #include "Hit.hpp"
@@ -11,8 +12,21 @@ class Sphere : public Hitable{
   public:
     Vec3 center;
     double radius;
+
+    // std::shared_ptr<Material> p_material;
+    // std::shared_ptr<Light> p_light;
     
-    Sphere(const Vec3& _center, const double& _radius) {
+    Sphere(const Vec3& _center, const double& _radius,
+           const std::shared_ptr<Material>& _p_material)
+    : Hitable()
+    {
+      center = _center;
+      radius = _radius;
+      /*Hitable::*/p_material = _p_material;
+    }
+
+    Sphere(const Vec3& _center, const double& _radius)
+    {
       center = _center;
       radius = _radius;
     }

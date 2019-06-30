@@ -49,4 +49,9 @@ add_executable(
   shadow_main.cc
 )
 
+add_executable(
+  path_tracing
+  path_tracing.cc
+)
+
 add_subdirectory(test)
