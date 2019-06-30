@@ -4,6 +4,8 @@
 #include "Vec3.hpp"
 #include "Ray.hpp"
 #include "Hit.hpp"
+#include "Material.hpp"
+#include "Light.hpp"
 
 class Sphere : public Hitable{
   public:

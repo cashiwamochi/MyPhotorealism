@@ -18,62 +18,66 @@ class Vec3 {
       return x*x + y*y + z*z;
     }
 
-  Vec3& operator += (const Vec3& v) {
-    x += v.x;
-    y += v.y;
-    z += v.z;
-    return *this;
-  }
-  
-  Vec3& operator -= (const Vec3& v) {
-    x -= v.x;
-    y -= v.y;
-    z -= v.z;
-    return *this;
-  }
+    Vec3 operator - () const {
+      return Vec3(-x,-y,-z);
+    }
 
-  Vec3& operator *= (const Vec3& v) {
-    x *= v.x;
-    y *= v.y;
-    z *= v.z;
-    return *this;
-  }
+    Vec3& operator += (const Vec3& v) {
+      x += v.x;
+      y += v.y;
+      z += v.z;
+      return *this;
+    }
+    
+    Vec3& operator -= (const Vec3& v) {
+      x -= v.x;
+      y -= v.y;
+      z -= v.z;
+      return *this;
+    }
 
-  Vec3& operator /= (const Vec3& v) {
-    x /= v.x;
-    y /= v.y;
-    z /= v.z;
-    return *this;
-  }
+    Vec3& operator *= (const Vec3& v) {
+      x *= v.x;
+      y *= v.y;
+      z *= v.z;
+      return *this;
+    }
 
-  Vec3& operator += (const double& s) {
-    x += s;
-    y += s;
-    z += s;
-    return *this;
-  }
-  
-  Vec3& operator -= (const double& s) {
-    x -= s;
-    y -= s;
-    z -= s;
-    return *this;
-  }
+    Vec3& operator /= (const Vec3& v) {
+      x /= v.x;
+      y /= v.y;
+      z /= v.z;
+      return *this;
+    }
 
-  Vec3& operator *= (const double& s) {
-    x *= s;
-    y *= s;
-    z *= s;
-    return *this;
-  }
+    Vec3& operator += (const double& s) {
+      x += s;
+      y += s;
+      z += s;
+      return *this;
+    }
+    
+    Vec3& operator -= (const double& s) {
+      x -= s;
+      y -= s;
+      z -= s;
+      return *this;
+    }
 
-  Vec3& operator /= (const double& s) {
-    x /= s;
-    y /= s;
-    z /= s;
-    return *this;
-  }
-};
+    Vec3& operator *= (const double& s) {
+      x *= s;
+      y *= s;
+      z *= s;
+      return *this;
+    }
+
+    Vec3& operator /= (const double& s) {
+      x /= s;
+      y /= s;
+      z /= s;
+      return *this;
+    }
+};// Vec3
 
 // Vector and Vector
 Vec3 operator + (const Vec3& v1, const Vec3& v2) {
@@ -155,3 +159,19 @@ void orthonormalBasis(const Vec3& v1, Vec3& v2, Vec3& v3) {
   v3 = cross(v1, v2);
   return;
 }
+
+Vec3 worldToLocal(const Vec3& v,
+                  const Vec3& s, const Vec3& t, const Vec3& n)
+{
+  return Vec3(dot(v,s), dot(v,t),dot(v,n));
+}
+
+Vec3 localToWorld(const Vec3& v,
+                  const Vec3& s, const Vec3& t, const Vec3& n)
+{
+  Vec3 a = Vec3(s.x, n.x, t.x);
+  Vec3 b = Vec3(s.y, n.y, t.y);
+  Vec3 c = Vec3(s.z, n.z, t.z);
+  return Vec3(dot(v, a), dot(v, b), dot(v, c));
+}
+

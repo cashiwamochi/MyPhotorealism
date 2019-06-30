@@ -10,6 +10,7 @@
 #include "Hit.hpp"
 #include "Sphere.hpp"
 #include "Aggregate.hpp"
+#include "Material.hpp"
 
 using namespace std;
 
