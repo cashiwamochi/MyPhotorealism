@@ -17,12 +17,14 @@ class Sphere : public Hitable{
     // std::shared_ptr<Light> p_light;
     
     Sphere(const Vec3& _center, const double& _radius,
-           const std::shared_ptr<Material>& _p_material)
+           const std::shared_ptr<Material>& _p_material,
+           const std::shared_ptr<Light>& _p_light)
     : Hitable()
     {
       center = _center;
       radius = _radius;
       /*Hitable::*/p_material = _p_material;
+      /*Hitable::*/p_light = _p_light;
     }
 
     Sphere(const Vec3& _center, const double& _radius)
@@ -51,9 +53,7 @@ class Sphere : public Hitable{
           return false;
         }
       }
-
 #else
-
       if(D > 0.0 && t1 > 0.0) {
         // res.distance = t1;
         // res.hitPos = ray(t1);
@@ -62,9 +62,7 @@ class Sphere : public Hitable{
         res = Hit(t1, ray(t1), normalize(ray(t1) - center), (Hitable*)this);
         return true;
       }
-
       return false;
-
 #endif
 
       res = Hit(t1, ray(t1), normalize(ray(t1) - center), (Hitable*)this);

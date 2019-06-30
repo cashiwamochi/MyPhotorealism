@@ -14,7 +14,6 @@
 
 using namespace std;
 
-
 #define MAX_DEPTH 500
 #define ROULETTE 0.9
 
@@ -57,7 +56,11 @@ Vec3 radiance(const Ray& init_ray, const Aggregate& aggregate) {
       ray = Ray(res.hitPos + 0.001*res.hitNormal, wi);
     }
     else {
+#if 1
+      col += throughput*Vec3(0.0);
+#else
       col += throughput*Vec3(1.0);
+#endif
       break;
     }
 
@@ -78,15 +81,22 @@ try
   const int height = 512;
   const int width = 512;
 
-  const int N = 100;
+  const int N = 500;
 
   Image img(height, width);
   PinholeCamera cam(Vec3(0,0,0), Vec3(0,0,-1), 1);
 
+  auto mat1 = std::make_shared<Diffuse>(Vec3(0.9));
+  auto mat2 = std::make_shared<Diffuse>(Vec3(0.2,0.2,0.8));
+
+  auto light1 = std::make_shared<Light>(Vec3(0.0));
+  // auto light2 = std::make_shared<Light>(Vec3(0.0));
+  auto light2 = std::make_shared<Light>(Vec3(0.2, 0.2, 0.8));
+
   Aggregate aggregate;
 
-  aggregate.add(std::make_shared<Sphere>(Sphere(Vec3(0.0,0.0,-3.0), 1.0)));
-  aggregate.add(std::make_shared<Sphere>(Sphere(Vec3(0.0,-10001.0,-3.0), 10000.0)));
+  aggregate.add(std::make_shared<Sphere>(Vec3(0.0,-10001.0,-0.0), 10000.0, mat1, light1));
+  aggregate.add(std::make_shared<Sphere>(Vec3(0.0,0.0,-3.0),      1.0, mat2, light2));
 
   Vec3 sun_direction = normalize(Vec3(1.0,1.0,1.0));
 
@@ -94,27 +104,27 @@ try
   for(int r = 0; r < img.height; ++r) {
     for(int c = 0; c < img.width; ++c) {
       Vec3 col(0.0);
+
       for(int i = 0; i < N; ++i) {
         double u = (2.0 * (c+rnd()) - img.width)/img.width;
         double v = (2.0 * (r+rnd()) - img.height)/img.height;
 
         Ray ray = cam.getRay(-u, -v);
-        Hit res;
-
-        if(aggregate.intersect(ray, res)) {
-          Ray shadowRay(res.hitPos + 0.0001*res.hitNormal, sun_direction);
-          Hit res_temp;
-          if(!aggregate.intersect(shadowRay, res_temp)) {
-            col += std::max(dot(res.hitNormal, sun_direction), 0.0) * Vec3(1.0);  
-          }
-        }
+        col += radiance(ray, aggregate);
       }
-      col /= (float)N;
-      img.setPixel(r, c, col);
+
+      img.setPixel(r, c, col/static_cast<double>(N));
+
+      if(omp_get_thread_num() == 0) {
+        std::cout << double(c + r*img.height)/(img.width*img.height) * 100.0
+                  << "\r" << std::flush;
+      }
     }
   }
 
-  img.writePPM("test_shadow.ppm");
+  img.gammaCorrection();
+
+  img.writePPM("path_tracing.ppm");
 
   return 0;
 }
