@@ -11,7 +11,7 @@ ELSE()
 ENDIF()
 
 
-set( CMAKE_CXX_FLAGS "-std=c++17 -O3" )
+set( CMAKE_CXX_FLAGS "-std=c++17 -O3 -mtune=native -march=native" )
 find_package(OpenMP REQUIRED)
 if(OpenMP_FOUND)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")

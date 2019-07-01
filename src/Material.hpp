@@ -35,7 +35,7 @@ Vec3 reflect(const Vec3& v, const Vec3& n) {
 }
 
 double cosTheta(const Vec3& v) {
-  return v.y;
+  return std::abs(v.y);
 }
 
 class Mirror : public Material {
