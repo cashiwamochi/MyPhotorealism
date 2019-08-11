@@ -64,4 +64,9 @@ add_executable(
   path_tracing_mirror.cc
 )
 
+add_executable(
+  cornell_box 
+  cornell_box.cc
+)
+
 add_subdirectory(test)
