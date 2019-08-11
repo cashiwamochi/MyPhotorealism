@@ -54,4 +54,14 @@ add_executable(
   path_tracing.cc
 )
 
+add_executable(
+  path_tracing_diffuse
+  path_tracing_diffuse.cc
+)
+
+add_executable(
+  path_tracing_mirror
+  path_tracing_mirror.cc
+)
+
 add_subdirectory(test)

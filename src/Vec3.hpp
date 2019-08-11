@@ -169,9 +169,9 @@ Vec3 worldToLocal(const Vec3& v,
 Vec3 localToWorld(const Vec3& v,
                   const Vec3& s, const Vec3& t, const Vec3& n)
 {
-  Vec3 a = Vec3(s.x, n.x, t.x);
-  Vec3 b = Vec3(s.y, n.y, t.y);
-  Vec3 c = Vec3(s.z, n.z, t.z);
+  Vec3 a = Vec3(s.x, t.x, n.x);
+  Vec3 b = Vec3(s.y, t.y, n.y);
+  Vec3 c = Vec3(s.z, t.z, n.z);
   return Vec3(dot(v, a), dot(v, b), dot(v, c));
 }
 

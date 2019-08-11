@@ -87,8 +87,7 @@ try
   PinholeCamera cam(Vec3(0,0,1), Vec3(0,0,-1), 1);
 
   // floor
-  // auto mat1 = std::make_shared<Diffuse>(Vec3(0.9));
-  auto mat1 = std::make_shared<Mirror>();
+  auto mat1 = std::make_shared<Diffuse>(Vec3(0.9));
   // object
   auto mat2 = std::make_shared<Diffuse>(Vec3(0.2,0.2,0.8));
 
@@ -96,8 +95,7 @@ try
   // floor
   auto light1 = std::make_shared<Light>(Vec3(0.0));
   // object 
-  auto light2 = std::make_shared<Light>(Vec3(0.0));
-  // auto light2 = std::make_shared<Light>(Vec3(0.2, 0.2, 0.8));
+  auto light2 = std::make_shared<Light>(Vec3(0.2, 0.2, 0.8));
 
   Aggregate aggregate;
 
@@ -130,7 +128,7 @@ try
 
   img.gammaCorrection();
 
-  img.writePPM("path_tracing.ppm");
+  img.writePPM("path_tracing_diffuse.ppm");
 
   return 0;
 }

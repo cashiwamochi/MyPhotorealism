@@ -56,7 +56,7 @@ Vec3 radiance(const Ray& init_ray, const Aggregate& aggregate) {
       ray = Ray(res.hitPos + 0.001*res.hitNormal, wi);
     }
     else {
-#if 0
+#if 1
       col += throughput*Vec3(0.0);
 #else
       col += throughput*Vec3(1.0);
@@ -96,8 +96,7 @@ try
   // floor
   auto light1 = std::make_shared<Light>(Vec3(0.0));
   // object 
-  auto light2 = std::make_shared<Light>(Vec3(0.0));
-  // auto light2 = std::make_shared<Light>(Vec3(0.2, 0.2, 0.8));
+  auto light2 = std::make_shared<Light>(Vec3(0.2, 0.2, 0.8));
 
   Aggregate aggregate;
 
@@ -130,7 +129,7 @@ try
 
   img.gammaCorrection();
 
-  img.writePPM("path_tracing.ppm");
+  img.writePPM("path_tracing_mirror.ppm");
 
   return 0;
 }
