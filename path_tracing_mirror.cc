@@ -1,7 +1,9 @@
 #include <iostream>
 #include <memory>
 
+#ifdef ENABLE_OPENMP
 #include <omp.h>
+#endif
 
 #include "Vec3.hpp"
 #include "Ray.hpp"
@@ -120,10 +122,11 @@ try
 
       img.setPixel(r, c, col/static_cast<double>(N));
 
-      if(omp_get_thread_num() == 0) {
+#ifdef ENABLE_OPENMP
+      if(omp_get_thread_num() == 0)
+#endif
         std::cout << double(c + r*img.height)/(img.width*img.height) * 100.0
                   << "\r" << std::flush;
-      }
     }
   }
 

@@ -1,7 +1,9 @@
 #include <iostream>
 #include <memory>
 
+#ifdef ENABLE_OPENMP
 #include <omp.h>
+#endif
 
 #include "Vec3.hpp"
 #include "Ray.hpp"
@@ -106,7 +108,9 @@ try
 
   Vec3 sun_direction = normalize(Vec3(1.0,1.0,1.0));
 
+#ifdef ENABLE_OPENMP
 #pragma omp parallel for schedule(dynamic, 1)
+#endif
   for(int r = 0; r < img.height; ++r) {
     for(int c = 0; c < img.width; ++c) {
       Vec3 col(0.0);
@@ -121,10 +125,11 @@ try
 
       img.setPixel(r, c, col/static_cast<double>(N));
 
-      if(omp_get_thread_num() == 0) {
+#ifdef ENABLE_OPENMP
+      if(omp_get_thread_num() == 0)
+#endif
         std::cout << double(c + r*img.height)/(img.width*img.height) * 100.0
                   << "\r" << std::flush;
-      }
     }
   }
 

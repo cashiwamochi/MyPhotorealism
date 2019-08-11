@@ -1,7 +1,9 @@
 #include <iostream>
 #include <memory>
 
+#ifdef ENABLE_OPENMP
 #include <omp.h>
+#endif
 
 #include "Vec3.hpp"
 #include "Ray.hpp"

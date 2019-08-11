@@ -10,12 +10,13 @@ ELSE()
   set(CMAKE_MACOSX_RPATH 1) # This is needed in macOS
 ENDIF()
 
-
 set( CMAKE_CXX_FLAGS "-std=c++17 -O3 -mtune=native -march=native" )
-find_package(OpenMP REQUIRED)
+
+find_package(OpenMP)
 if(OpenMP_FOUND)
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+  add_definitions(-DENABLE_OPENMP)
 endif()
 
 include_directories(
