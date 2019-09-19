@@ -70,4 +70,9 @@ add_executable(
   cornell_box.cc
 )
 
+add_executable(
+  use_sky
+  use_sky.cc
+)
+
 add_subdirectory(test)

@@ -35,8 +35,17 @@ Vec3 reflect(const Vec3& v, const Vec3& n) {
 }
 
 double cosTheta(const Vec3& v) {
-  // return std::abs(v.y);
   return v.y;
+}
+
+double absCosTheta(const Vec3& v) {
+  return v.y;
+}
+
+double fresnel(const Vec3& v, const Vec3& n, double n1, double n2) {
+  double f0 = std::pow((n1-n2)/(n1+n2), 2.0);
+  double cos = absCosTheta(v);
+  return f0 + (1.0 - f0)*std::pow(1.0 - cos, 5.0);
 }
 
 class Mirror : public Material {
