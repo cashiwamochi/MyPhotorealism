@@ -1,7 +1,15 @@
-#pragma once
-
+#ifndef SKY_H
+#define SKY_H
+#include <string>
 #include "Vec3.hpp"
 #include "Ray.hpp"
+#endif
+
+
+#ifndef STB_IMAGE_IMPLEMENTATION
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
+#endif
 
 class Sky {
   public:
@@ -28,3 +36,37 @@ class SimpleSky : public Sky {
       return (1.0 - t)*Vec3(1.0) + t*Vec3(0.7,0.8,1.0);
     }
 };
+
+class IBL : public Sky {
+  public:
+    int width;
+    int height;
+    float* hdr_image;
+
+    IBL(const std::string& filename) {
+      int n;
+      hdr_image = stbi_loadf(filename.c_str(), &width, &height, &n, 0);
+    }
+
+    ~IBL() {
+      stbi_image_free(hdr_image);
+    }
+
+  Vec3 getRadiance(const Ray& ray) const {
+    double theta = std::acos(ray.direction.y);
+    double phi = std::atan2(ray.direction.z, ray.direction.x);
+
+    if(phi < 0) {
+      phi += 2.0*M_PI;
+    }
+
+    int i = phi/(2.0*M_PI) * width;
+    int j = theta/M_PI * height;
+
+    int index = 3.0 * i + 3.0*width*j;
+
+    return Vec3(hdr_image[index], hdr_image[index+1], hdr_image[index+2]);
+  }
+
+};
+

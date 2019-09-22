@@ -1,2 +1,4 @@
 build
 src/stb_image.h
+*.hdr
+*.pdf

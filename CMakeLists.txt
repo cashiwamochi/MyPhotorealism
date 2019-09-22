@@ -75,4 +75,19 @@ add_executable(
   use_sky.cc
 )
 
+add_executable(
+  use_ibl
+  use_ibl.cc
+)
+
+add_executable(
+  use_thinlens
+  use_thinlens.cc
+)
+
+add_executable(
+  use_glass
+  use_glass.cc
+)
+
 add_subdirectory(test)

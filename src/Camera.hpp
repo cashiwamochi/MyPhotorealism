@@ -1,6 +1,7 @@
 #pragma once
 #include "Vec3.hpp"
 #include "Ray.hpp"
+#include "random.hpp"
 
 class Camera {
   public:
@@ -38,5 +39,36 @@ class PinholeCamera : public Camera {
       Vec3 pihholePos = camPos + pinholeDist*camForward;
       Vec3 sensorPos = camPos + u*camRight + v*camUp;
       return Ray(sensorPos, normalize(pihholePos - sensorPos));
+    }
+};
+
+class ThinLensCamera : public Camera {
+  public:
+    double a;
+    double b;
+    double f;
+    double lensRadius;
+    Vec3 lensCenter;
+
+    ThinLensCamera(const Vec3& _camPos, const Vec3& _camForward,
+                   const Vec3& focusPoint, double _a, double _lensRadius)
+    : Camera(_camPos,_camForward), a(_a), lensRadius(_lensRadius) 
+    {
+      double cos = dot(camForward, normalize(focusPoint - camPos));
+      b = cos*(focusPoint - camPos).length() - a;
+      f = 1.0/(1.0/a + 1.0/b);
+      lensCenter = camPos + a*camForward;
+    }
+
+    Ray getRay(const double u, const double v) const {
+      Vec3 sensorPos = camPos + u*camRight + v*camUp;
+      Vec3 r = normalize(lensCenter - sensorPos);
+      Vec3 pf = sensorPos + (a + b)/dot(camForward, r) * r;
+
+      double x, y;
+      sampleDisk(x, y);
+      Vec3 l = lensCenter + lensRadius*(x*camRight + y*camUp);
+
+      return Ray(l, normalize(pf - l));
     }
 };

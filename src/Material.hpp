@@ -1,6 +1,32 @@
 #pragma once
 #include "random.hpp"
 
+double absCosTheta(const Vec3& v) {
+  return std::abs(v.y);
+}
+
+bool refract(const Vec3& v, Vec3& r, const Vec3& n, double n1, double n2) {
+  double cos = absCosTheta(v);
+  double sin = std::sqrt(std::max(1.0 - cos*cos, 0.0));
+  double alpha = n1/n2 * sin;
+
+  if(alpha*alpha > 1.0) {
+    return false;
+  }
+
+  r = n1/n2 * (-v + dot(v, n)*n) - std::sqrt(1.0 - alpha*alpha)*n;
+
+  return false;
+}
+
+Vec3 reflect(const Vec3& v, const Vec3& n) {
+  return -v + 2.0*dot(v,n)*n;
+}
+
+double cosTheta(const Vec3& v) {
+  return v.y;
+}
+
 class Material {
   public:
     virtual Vec3 sample(const Vec3& wo, Vec3& wi, double& pdf) const = 0;
@@ -29,18 +55,6 @@ class Diffuse : public Material {
       return rho/M_PI;
     }
 };
-
-Vec3 reflect(const Vec3& v, const Vec3& n) {
-  return -v + 2.0*dot(v,n)*n;
-}
-
-double cosTheta(const Vec3& v) {
-  return v.y;
-}
-
-double absCosTheta(const Vec3& v) {
-  return v.y;
-}
 
 double fresnel(const Vec3& v, const Vec3& n, double n1, double n2) {
   double f0 = std::pow((n1-n2)/(n1+n2), 2.0);
