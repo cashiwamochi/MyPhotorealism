@@ -17,7 +17,7 @@
 
 using namespace std;
 
-#define MAX_DEPTH 250
+#define MAX_DEPTH 200
 #define ROULETTE 0.9
 
 Vec3 radiance(const Ray& init_ray, const Aggregate& aggregate, const Sky& sky) {
@@ -51,7 +51,7 @@ Vec3 radiance(const Ray& init_ray, const Aggregate& aggregate, const Sky& sky) {
 
       throughput *= brdf*cos/pdf;
 
-      ray = Ray(res.hitPos + 0.001*res.hitNormal, wi);
+      ray = Ray(res.hitPos, wi);
     }
     else {
       col += throughput * sky.getRadiance(ray);
@@ -71,17 +71,15 @@ Vec3 radiance(const Ray& init_ray, const Aggregate& aggregate, const Sky& sky) {
 }
 
 int main(int argc, char* argv[]) {
-  const int N = 200;
+  const int N = 2000;
   Image img(512, 512);
 
-  // PinholeCamera cam(Vec3(0,2,1), Vec3(0,0.25,-1), 1);
   ThinLensCamera cam(Vec3(0,0,1), Vec3(0,0,-1), Vec3(0, 0, -3), 1, 0.1);
 
   auto mat1 = std::make_shared<Diffuse>(Vec3(0.9));
-  auto mat2 = std::make_shared<Diffuse>(Vec3(0.2, 0.2, 0.8));
+  auto mat2 = std::make_shared<Glass>(1.5);
 
   auto light1 = std::make_shared<Light>(Vec3(0.0));
-  // auto light2 = std::make_shared<Light>(Vec3(0.2,0.2,0.8));
 
   Aggregate aggregate;
   aggregate.add(std::make_shared<Sphere>(Vec3(0, -10001, 0), 10000, mat1, light1));
@@ -114,7 +112,7 @@ int main(int argc, char* argv[]) {
 
   img.gammaCorrection();
 
-  img.writePPM("use_thislens.ppm");
+  img.writePPM("use_glass.ppm");
 
   return 0;
 }

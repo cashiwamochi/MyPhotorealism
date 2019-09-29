@@ -174,4 +174,3 @@ Vec3 localToWorld(const Vec3& v,
   Vec3 c = Vec3(s.z, t.z, n.z);
   return Vec3(dot(v, a), dot(v, b), dot(v, c));
 }
-
